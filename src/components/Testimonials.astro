@@ -1,0 +1,42 @@
+---
+import type { Resume, UiStrings } from '../types/resume';
+import { hasSection } from '../lib/resume';
+import Section from './Section.astro';
+
+interface Props {
+  resume: Resume;
+  ui: UiStrings;
+}
+
+const { resume, ui } = Astro.props;
+const testimonials = resume.testimonials ?? [];
+---
+
+{hasSection(resume, 'testimonials') && (
+  <Section id="testimonials" title={ui.navTestimonials}>
+    <div class="grid-fill-last grid gap-5 sm:grid-cols-2">
+      {testimonials.map((item) => (
+        <figure class="card print-break-inside-avoid flex flex-col">
+          <blockquote class="flex-1 text-body text-primary">
+            <p>“{item.quote}”</p>
+          </blockquote>
+          <figcaption class="mt-4 text-sm">
+            {item.url ? (
+              <a
+                href={item.url}
+                class="text-link -my-3 inline-flex min-h-11 items-center font-semibold"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {item.name}
+              </a>
+            ) : (
+              <span class="font-semibold text-primary">{item.name}</span>
+            )}
+            <span class="block text-muted">{item.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </Section>
+)}

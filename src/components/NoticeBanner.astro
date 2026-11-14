@@ -8,16 +8,10 @@ interface Props {
 const { ui } = Astro.props;
 ---
 
-<div
-  class="no-print border-b border-muted bg-accent-soft"
-  role="status"
-  aria-label={ui.noticeBannerAria}
->
-  <p
-    class="mx-auto flex max-w-3xl items-start justify-center gap-2 px-4 py-2.5 text-center text-sm text-muted sm:items-center sm:px-6"
-  >
+{ui.noticeBanner && (
+  <p class="no-print mb-8 flex items-start gap-2 text-sm text-muted">
     <svg
-      class="mt-0.5 h-4 w-4 shrink-0 text-accent sm:mt-0"
+      class="mt-0.5 h-4 w-4 shrink-0 text-accent"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -30,4 +24,4 @@ const { ui } = Astro.props;
     </svg>
     <span>{ui.noticeBanner}</span>
   </p>
-</div>
+)}

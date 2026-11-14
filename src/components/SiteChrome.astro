@@ -1,56 +1,53 @@
 ---
-import type { Locale, UiStrings } from '../types/resume';
-import { getPdfPath } from '../lib/resume';
+import type { Locale, Resume, UiStrings } from '../types/resume';
+import { getNavSections, getPdfPath } from '../lib/resume';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import NoticeBanner from './NoticeBanner.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Download from './icons/Download.astro';
 
 interface Props {
   locale: Locale;
+  resume: Resume;
   ui: UiStrings;
 }
 
-const { locale, ui } = Astro.props;
+const { locale, resume, ui } = Astro.props;
 const pdfPath = getPdfPath(locale);
-
-const navItems = [
-  { href: '#experience', label: ui.navExperience },
-  { href: '#skills', label: ui.navSkills },
-  { href: '#languages', label: ui.navLanguages },
-  { href: '#education', label: ui.navEducation },
-];
+const navItems = getNavSections(resume, ui);
 ---
 
-<div class="no-print sticky top-0 z-50 border-b border-muted bg-surface/90 backdrop-blur-md">
-  <div
-    class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-2 gap-y-2 px-4 py-3 sm:flex-nowrap sm:gap-3 sm:px-6"
-  >
-    <nav
-      class="flex min-w-0 flex-1 flex-wrap gap-x-3 gap-y-1 text-sm font-medium sm:flex-nowrap sm:gap-x-4"
-      aria-label="Section navigation"
-    >
-      {
-        navItems.map((item) => (
-          <a href={item.href} class="shrink-0 text-muted transition hover:text-accent">
-            {item.label}
-          </a>
-        ))
-      }
+<a href="#main" class="skip-link no-print">{ui.skipToContent}</a>
+<header class="no-print sticky top-0 z-50 border-b border-muted bg-surface/90 backdrop-blur-md">
+  <div class="mx-auto flex max-w-3xl items-center gap-2 px-4 py-1 sm:gap-3 sm:px-6">
+    <nav class="scroll-row -ml-2 hidden min-w-0 flex-1 sm:block" aria-label={ui.sectionNavAria}>
+      <ul class="flex">
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={`#${item.id}`} class="nav-link">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
-    <div class="flex shrink-0 flex-nowrap items-center gap-1.5 sm:gap-2">
-      <a
-        href={pdfPath}
-        download={`resume-${locale}.pdf`}
-        class="btn-outline btn-with-icon max-md:gap-0 max-md:px-2.5"
-        aria-label={ui.downloadPdfAria}
-      >
-        <Download class="icon text-muted" size={14} />
-        <span class="hidden md:inline">{ui.downloadPdf}</span>
-      </a>
+    <div class="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
+      <div class="seg-group">
+        <a
+          href={pdfPath}
+          download={`resume-${locale}.pdf`}
+          class="seg-btn text-primary"
+          aria-label={ui.downloadPdfAria}
+        >
+          <span class="seg-chip">
+            <Download class="icon" size={14} />
+            <span class="hidden md:inline">{ui.downloadPdf}</span>
+          </span>
+        </a>
+      </div>
       <LanguageSwitcher locale={locale} />
       <ThemeToggle ui={ui} />
     </div>
   </div>
-</div>
-<NoticeBanner ui={ui} />
+</header>

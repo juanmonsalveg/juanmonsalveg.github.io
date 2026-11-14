@@ -20,12 +20,13 @@ Human-oriented setup and deploy notes live in [README.md](README.md).
 | `src/pages/en/`, `src/pages/es/` | Locale-specific page entrypoints |
 | `src/layouts/BaseLayout.astro` | HTML shell, meta, theme, global styles |
 | `src/components/` | Astro UI sections and icons |
-| `src/lib/resume.ts` | Resume loading, date formatting, locale helpers |
+| `src/lib/resume.ts` | Resume loading, date formatting, locale helpers, section registry (`hasSection`, `getNavSections`) |
 | `src/i18n/index.ts` | UI string loader |
 | `src/types/resume.ts` | Shared TypeScript types |
 | `src/styles/global.css` | Tailwind import, CSS variables, base styles |
 | `src/styles/print.css` | Print/PDF-specific rules |
 | `scripts/generate-pdf.mjs` | Playwright PDF export (runs after `astro build`) |
+| `scripts/generate-og.mjs` | Playwright 1200×630 social cards → `dist/images/og-<locale>.png` (runs after the PDFs) |
 | `public/` | Static assets (`CNAME`, favicons, images) |
 | `.github/workflows/deploy.yml` | CI build and GitHub Pages deploy |
 
@@ -48,7 +49,7 @@ npm run dev
 npm run build
 ```
 
-Builds static output to `dist/` and generates both locale PDFs. CI also installs Playwright Chromium before build.
+Builds static output to `dist/`, generates both locale PDFs, then the social cards (`npm run og` regenerates only those). CI also installs Playwright Chromium before build.
 
 ```bash
 npm run preview
@@ -90,6 +91,9 @@ Locale pages (`src/pages/en/index.astro`, `src/pages/es/index.astro`) should sta
 
 - Resume JSON must match types in `src/types/resume.ts` (JSON Resume–inspired).
 - Work entries use `highlights` for achievement bullets and `technologies` for stack tags; `basics.keyHighlights` is an optional summary bullet list.
+- `compact: true` on a work entry renders it as company, role, dates and `summary`, with highlights and technologies behind a "Show details" `<details>`. Print and the PDF always show them expanded (`print.css` + `generate-pdf.mjs`).
+- `brands` is an optional list of names for the text-only strip under the hero.
+- Optional sections `caseStudies`, `featuredProject`, `testimonials`, `howIWork`, `services` are hidden — on the page and in the nav — while empty. Visibility comes from the registry in `src/lib/resume.ts`; add new sections there so nav and page stay in sync. Never fill them with placeholder copy.
 - `languages` is required. Skill groups use `keywords` only (no self-rated levels).
 - Date strings in resume JSON use `YYYY-MM` or `YYYY`; formatting is handled in `formatDateRange()` in `src/lib/resume.ts`.
 
@@ -113,6 +117,7 @@ Both are imported from `src/layouts/BaseLayout.astro`. There is no `tailwind.con
 ### Design tokens (theming)
 
 - **Semantic colors** live as CSS variables on `:root` (light) and `.dark` (dark), e.g. `--color-bg`, `--color-text`, `--color-muted`, `--color-accent`, `--color-border`.
+- `--color-accent` must keep **≥ 4.5:1** against `--color-bg`, `--color-surface` and `--color-accent-soft` (it is used for text). Use `--color-accent-decor` (bright orange) only for non-text marks such as the section-heading underline.
 - **Dark mode** is class-based: `document.documentElement` gets `.dark` from `ThemeToggle.astro` / inline script in `BaseLayout.astro`. Never rely on `prefers-color-scheme` alone in component CSS.
 - **Do not hardcode** theme hex values in `.astro` templates. Use semantic utility classes (below) or `var(--color-*)` inside `global.css`.
 - When adding a new token, define it in **both** `:root` and `.dark` in `global.css`, and override for print in `print.css` if PDF output needs it.
@@ -125,6 +130,9 @@ Both are imported from `src/layouts/BaseLayout.astro`. There is no `tailwind.con
 - Use **semantic utilities** from `@layer utilities` in `global.css` for anything that must track the theme:
   - Surfaces/text: `bg-app`, `bg-surface`, `bg-surface/90`, `text-primary`, `text-muted`, `text-accent`, `text-link`, `border-muted`
   - Components: `section-heading`, `card`, `skill-tag`, `tool-tag`, `btn-primary`, `btn-outline`, `btn-icon-circle`, `contact-item`, `btn-with-icon`
+  - Sticky bar: `seg-group` / `seg-btn` / `seg-chip` (44×44 px hit area with a smaller visual chip), `nav-link`, `skip-link`
+  - Layout helpers: `grid-fill-last` (lone last card spans the row), `card-flat-mobile`, `details-toggle`
+- Body copy (summaries, bullets) uses the `text-body` size (15px) registered in `@theme`.
 
 **In `global.css`:**
 
@@ -138,8 +146,8 @@ Both are imported from `src/layouts/BaseLayout.astro`. There is no `tailwind.con
 
 PDFs are rendered with Playwright using print media. Screen-only UI must be hidden from print:
 
-- Add `no-print` to chrome that should not appear in PDFs (nav, footer, theme toggle, language switcher, interests section, notice banner).
-- Add `no-print` to chrome that should not appear in PDFs (nav, footer, theme toggle, language switcher, notice banner).
+- Add `no-print` to chrome that should not appear in PDFs (sticky bar, skip link, footer, theme toggle, language switcher, hero contact buttons, notice line, "Show details" toggles).
+- Hero print layout hooks: `hero`, `hero-photo`, `hero-label`, `hero-summary`, `hero-meta` (no screen styles; targeted from `print.css`).
 - Use `print-contact` / `print-contact-sep` in `Header.astro` for contact lines shown only in print.
 - Use `print-break-inside-avoid` on blocks that must not split across pages (experience items, skill cards, education entries).
 
@@ -151,7 +159,8 @@ After CSS changes that affect PDF layout, run `npm run build` and inspect `dist/
 
 - Focus styles for links and buttons are defined globally in `@layer base` (`outline` using `var(--color-accent)`). Do not remove focus outlines without a visible replacement.
 - Icon color inside interactive controls often uses `.icon` with `currentColor` or `text-accent` on hover—match existing `btn-outline` / `contact-item` patterns.
-- Section anchors use `scroll-mt-24` to clear the sticky header (`SiteChrome`).
+- Section anchors use `scroll-mt-24` to clear the sticky header (`SiteChrome`); wrap new sections in `Section.astro`, which also labels them as landmarks.
+- Interactive controls need a **44×44 px** touch target (use `min-h-11` / `seg-btn`), and their accessible name must contain their visible text.
 
 ### CSS do not
 

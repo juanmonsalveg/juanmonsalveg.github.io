@@ -1,0 +1,59 @@
+---
+import type { Resume, UiStrings } from '../types/resume';
+import { hasSection } from '../lib/resume';
+import Section from './Section.astro';
+import GitHubFilled from './icons/GitHubFilled.astro';
+import Globe from './icons/Globe.astro';
+
+interface Props {
+  resume: Resume;
+  ui: UiStrings;
+}
+
+const { resume, ui } = Astro.props;
+const project = resume.featuredProject;
+---
+
+{hasSection(resume, 'featured-project') && project && (
+  <Section id="featured-project" title={ui.navFeaturedProject}>
+    <article class="card print-break-inside-avoid">
+      <h3 class="text-lg font-semibold text-primary">{project.name}</h3>
+      <p class="mt-2 text-body text-muted">{project.description}</p>
+      {project.highlights && project.highlights.length > 0 && (
+        <ul class="achievement-list mt-3 list-disc space-y-1.5 pl-5 text-body text-muted">
+          {project.highlights.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )}
+      {project.technologies && project.technologies.length > 0 && (
+        <ul class="mt-3 flex flex-wrap gap-2" aria-label={ui.technologies}>
+          {project.technologies.map((tool) => (
+            <li class="tool-tag">{tool}</li>
+          ))}
+        </ul>
+      )}
+      {(project.url || project.repository) && (
+        <div class="mt-4 flex flex-wrap gap-3">
+          {project.url && (
+            <a href={project.url} class="btn-primary" rel="noopener noreferrer" target="_blank">
+              <Globe size={16} />
+              {ui.projectLiveLink}
+            </a>
+          )}
+          {project.repository && (
+            <a
+              href={project.repository}
+              class="btn-outline btn-with-icon min-h-11 text-sm"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <GitHubFilled class="icon" size={16} />
+              {ui.projectRepoLink}
+            </a>
+          )}
+        </div>
+      )}
+    </article>
+  </Section>
+)}

@@ -1,18 +1,17 @@
 ---
-import type { Locale, Resume, UiStrings } from '../types/resume';
-import { formatDateRange } from '../lib/resume';
+import type { Resume, UiStrings } from '../types/resume';
+import { formatYear } from '../lib/resume';
+import Section from './Section.astro';
 
 interface Props {
   resume: Resume;
   ui: UiStrings;
-  locale: Locale;
 }
 
-const { resume, ui, locale } = Astro.props;
+const { resume, ui } = Astro.props;
 ---
 
-<section id="education" class="mb-14 scroll-mt-24">
-  <h2 class="section-heading">{ui.navEducation}</h2>
+<Section id="education" title={ui.navEducation}>
   <ul class="space-y-8">
     {
       resume.education.map((edu) => (
@@ -20,11 +19,11 @@ const { resume, ui, locale } = Astro.props;
           <h3 class="text-lg font-semibold text-primary">{edu.institution}</h3>
           <p class="mt-1 text-sm font-medium text-muted">
             {[edu.studyType, edu.area].filter(Boolean).join(' · ')}
-            {edu.startDate && edu.endDate && (
+            {edu.endDate && (
               <>
-                <span class="mx-2 opacity-40">·</span>
-                <time class="text-primary">
-                  {formatDateRange(edu.startDate, edu.endDate, ui.present, locale)}
+                <span class="mx-2 opacity-40" aria-hidden="true">·</span>
+                <time datetime={formatYear(edu.endDate)} class="text-primary">
+                  {formatYear(edu.endDate)}
                 </time>
               </>
             )}
@@ -33,4 +32,4 @@ const { resume, ui, locale } = Astro.props;
       ))
     }
   </ul>
-</section>
+</Section>

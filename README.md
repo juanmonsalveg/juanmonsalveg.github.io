@@ -25,7 +25,7 @@ npm run dev
 npm run build
 ```
 
-Builds the static site to `dist/` and generates `resume-en.pdf` and `resume-es.pdf`.
+Builds the static site to `dist/`, generates `resume-en.pdf` and `resume-es.pdf`, and renders the 1200×630 social cards (`images/og-en.png`, `images/og-es.png`).
 
 ## Content
 
@@ -33,6 +33,8 @@ Edit resume content in:
 
 - `data/resume.en.json`
 - `data/resume.es.json`
+
+Optional sections (`caseStudies`, `featuredProject`, `testimonials`, `howIWork`, `services`) and the `brands` strip render only when they have data, and appear in the navigation automatically. Set `"compact": true` on older work entries to collapse their details on screen (the PDF always shows them in full).
 
 UI labels (section titles, buttons) live in:
 

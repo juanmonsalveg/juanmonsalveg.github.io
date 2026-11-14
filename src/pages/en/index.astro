@@ -2,8 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteChrome from '../../components/SiteChrome.astro';
 import Header from '../../components/Header.astro';
+import NoticeBanner from '../../components/NoticeBanner.astro';
+import Brands from '../../components/Brands.astro';
 import Experience from '../../components/Experience.astro';
+import CaseStudies from '../../components/CaseStudies.astro';
+import FeaturedProject from '../../components/FeaturedProject.astro';
+import Testimonials from '../../components/Testimonials.astro';
 import Skills from '../../components/Skills.astro';
+import HowIWork from '../../components/HowIWork.astro';
+import Services from '../../components/Services.astro';
 import Languages from '../../components/Languages.astro';
 import Education from '../../components/Education.astro';
 import { getUi } from '../../i18n';
@@ -15,12 +22,19 @@ const ui = getUi(locale);
 ---
 
 <BaseLayout locale={locale}>
-  <SiteChrome locale={locale} ui={ui} />
-  <main class="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
+  <SiteChrome locale={locale} resume={resume} ui={ui} />
+  <main id="main" tabindex="-1" class="mx-auto max-w-3xl px-4 pt-8 pb-10 sm:px-6 sm:py-14">
     <Header resume={resume} ui={ui} locale={locale} />
+    <NoticeBanner ui={ui} />
+    <Brands resume={resume} ui={ui} />
     <Experience resume={resume} ui={ui} locale={locale} />
+    <CaseStudies resume={resume} ui={ui} />
+    <FeaturedProject resume={resume} ui={ui} />
+    <Testimonials resume={resume} ui={ui} />
     <Skills resume={resume} ui={ui} />
+    <HowIWork resume={resume} ui={ui} />
+    <Services resume={resume} ui={ui} />
     <Languages resume={resume} ui={ui} />
-    <Education resume={resume} ui={ui} locale={locale} />
+    <Education resume={resume} ui={ui} />
   </main>
 </BaseLayout>
