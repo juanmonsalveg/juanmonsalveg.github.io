@@ -1,0 +1,19 @@
+---
+import type { Resume, UiStrings } from '../types/resume';
+import { hasSection } from '../lib/resume';
+import Section from './Section.astro';
+import FeatureList from './FeatureList.astro';
+
+interface Props {
+  resume: Resume;
+  ui: UiStrings;
+}
+
+const { resume, ui } = Astro.props;
+---
+
+{hasSection(resume, 'how-i-work') && (
+  <Section id="how-i-work" title={ui.navHowIWork}>
+    <FeatureList items={resume.howIWork ?? []} />
+  </Section>
+)}

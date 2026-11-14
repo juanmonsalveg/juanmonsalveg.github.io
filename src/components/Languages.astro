@@ -1,5 +1,6 @@
 ---
 import type { Resume, UiStrings } from '../types/resume';
+import Section from './Section.astro';
 
 interface Props {
   resume: Resume;
@@ -9,8 +10,7 @@ interface Props {
 const { resume, ui } = Astro.props;
 ---
 
-<section id="languages" class="mb-14 scroll-mt-24">
-  <h2 class="section-heading">{ui.navLanguages}</h2>
+<Section id="languages" title={ui.navLanguages}>
   <ul class="space-y-3">
     {
       resume.languages.map((entry) => (
@@ -21,4 +21,4 @@ const { resume, ui } = Astro.props;
       ))
     }
   </ul>
-</section>
+</Section>

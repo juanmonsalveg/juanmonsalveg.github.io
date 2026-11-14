@@ -1,0 +1,15 @@
+---
+import type { SectionId } from '../lib/resume';
+
+interface Props {
+  id: SectionId;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-heading`} class="mb-12 scroll-mt-24 sm:mb-14">
+  <h2 id={`${id}-heading`} class="section-heading">{title}</h2>
+  <slot />
+</section>

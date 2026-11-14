@@ -69,7 +69,13 @@ async function main() {
     for (const locale of locales) {
       const url = `http://${host}:${port}/${locale}/`;
       await page.goto(url, { waitUntil: 'networkidle' });
-      await page.evaluate(() => document.documentElement.classList.remove('dark'));
+      await page.evaluate(() => {
+        document.documentElement.classList.remove('dark');
+        // Compact experience entries are collapsed on screen; the PDF shows them in full.
+        document.querySelectorAll('details').forEach((el) => {
+          el.open = true;
+        });
+      });
       await page.emulateMedia({ media: 'print', colorScheme: 'light' });
       const outFile = path.join(distDir, `resume-${locale}.pdf`);
       await page.pdf({

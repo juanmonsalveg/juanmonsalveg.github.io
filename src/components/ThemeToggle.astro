@@ -11,30 +11,33 @@ interface Props {
 const { ui } = Astro.props;
 ---
 
-<div class="no-print flex items-center gap-0.5 rounded-lg border border-muted bg-surface p-0.5">
+<div class="no-print seg-group" role="group" aria-label={ui.themeToggleAria}>
   <button
     type="button"
     data-theme="light"
-    class="theme-btn flex items-center justify-center rounded-md p-1.5 text-muted transition hover:text-accent cursor-pointer"
+    class="theme-btn seg-btn"
+    aria-pressed="false"
     aria-label={`${ui.themeToggleAria}: ${ui.themeLight}`}
   >
-    <Sun class="icon" size={14} />
+    <span class="seg-chip"><Sun class="icon" size={14} /></span>
   </button>
   <button
     type="button"
     data-theme="system"
-    class="theme-btn flex items-center justify-center rounded-md p-1.5 text-muted transition hover:text-accent cursor-pointer"
+    class="theme-btn seg-btn"
+    aria-pressed="false"
     aria-label={`${ui.themeToggleAria}: ${ui.themeSystem}`}
   >
-    <Monitor class="icon" size={14} />
+    <span class="seg-chip"><Monitor class="icon" size={14} /></span>
   </button>
   <button
     type="button"
     data-theme="dark"
-    class="theme-btn flex items-center justify-center rounded-md p-1.5 text-muted transition hover:text-accent cursor-pointer"
+    class="theme-btn seg-btn"
+    aria-pressed="false"
     aria-label={`${ui.themeToggleAria}: ${ui.themeDark}`}
   >
-    <Moon class="icon" size={14} />
+    <span class="seg-chip"><Moon class="icon" size={14} /></span>
   </button>
 </div>
 
@@ -55,10 +58,7 @@ const { ui } = Astro.props;
     const isDark = mode === 'dark' || (mode === 'system' && prefersDark());
     root.classList.toggle('dark', isDark);
     buttons.forEach((btn) => {
-      const active = btn.dataset.theme === mode;
-      btn.classList.toggle('bg-accent-soft', active);
-      btn.classList.toggle('text-accent', active);
-      btn.setAttribute('aria-pressed', String(active));
+      btn.setAttribute('aria-pressed', String(btn.dataset.theme === mode));
     });
   }
 

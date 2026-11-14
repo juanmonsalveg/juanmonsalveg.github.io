@@ -20,28 +20,76 @@ const { basics } = resume;
 const location = formatLocation(resume, locale);
 const github = basics.profiles?.find((p) => p.network === 'GitHub');
 const linkedin = basics.profiles?.find((p) => p.network === 'LinkedIn');
+const githubLabel = `${ui.githubAria}${github?.username ? ` (@${github.username})` : ''}`;
+const linkedinLabel = `${ui.linkedinAria}${linkedin?.username ? ` (@${linkedin.username})` : ''}`;
 ---
 
-<header class="mb-10 grid gap-8 sm:grid-cols-[8rem_1fr]">
+<header
+  class="hero mb-5 grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4 gap-y-5 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-x-8"
+>
   <img
     src="/images/profile.jpeg"
     alt={basics.name}
     width="128"
     height="128"
-    class="h-32 w-32 shrink-0 rounded-2xl object-cover shadow-md ring-1 ring-black/5 dark:ring-white/10"
+    class="hero-photo h-18 w-18 self-center rounded-2xl object-cover shadow-md ring-1 ring-black/5 sm:row-span-3 sm:h-32 sm:w-32 sm:self-start dark:ring-white/10"
     loading="eager"
   />
-  <div class="min-w-0">
+  <div class="hero-title min-w-0 self-center sm:self-start">
     <h1 class="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
       {basics.name}
     </h1>
-    <p class="mt-2 text-lg font-medium text-accent">{basics.label}</p>
-    <p class="mt-4 max-w-prose text-base leading-relaxed text-muted">
+    <p class="hero-label mt-1 text-lg font-medium text-accent sm:mt-2">{basics.label}</p>
+  </div>
+  <div class="hero-cta no-print col-span-2 flex flex-wrap items-center gap-3 sm:col-span-1 sm:col-start-2">
+    <a href={`mailto:${basics.email}`} class="btn-primary" title={ui.emailAria}>
+      <Mail size={18} />
+      <span>{ui.emailCta}</span>
+    </a>
+    {github && (
+      <a
+        href={github.url}
+        class="btn-icon-circle"
+        aria-label={githubLabel}
+        title={githubLabel}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <GitHubFilled size={18} />
+      </a>
+    )}
+    {linkedin && (
+      <a
+        href={linkedin.url}
+        class="btn-icon-circle"
+        aria-label={linkedinLabel}
+        title={linkedinLabel}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <LinkedInFilled size={18} />
+      </a>
+    )}
+    {basics.url && (
+      <a
+        href={basics.url}
+        class="btn-icon-circle"
+        aria-label={ui.websiteAria}
+        title={ui.websiteAria}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <Globe size={18} />
+      </a>
+    )}
+  </div>
+  <div class="hero-body col-span-2 min-w-0 sm:col-span-1 sm:col-start-2">
+    <p class="hero-summary max-w-prose text-body text-muted sm:text-base sm:leading-relaxed">
       {basics.summary}
     </p>
     {basics.keyHighlights && basics.keyHighlights.length > 0 && (
       <ul
-        class="achievement-list mt-4 max-w-prose list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-primary"
+        class="achievement-list mt-4 max-w-prose list-disc space-y-1.5 pl-5 text-body text-primary"
         aria-label={ui.keyHighlightsAria}
       >
         {basics.keyHighlights.map((item) => (
@@ -50,72 +98,28 @@ const linkedin = basics.profiles?.find((p) => p.network === 'LinkedIn');
       </ul>
     )}
   </div>
-  <div
-    class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-muted pt-4 sm:col-span-2"
-  >
+  <div class="hero-meta col-span-2 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-muted pt-4">
     <dl class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
       {location && (
         <div class="contact-item">
-          <MapPin class="icon" size={16} />
-          <div>
-            <dt class="sr-only">{ui.locationLabel}</dt>
-            <dd class="text-muted">{location}</dd>
-          </div>
+          <dt>
+            <MapPin class="icon" size={16} />
+            <span class="sr-only">{ui.locationLabel}</span>
+          </dt>
+          <dd class="text-muted">{location}</dd>
         </div>
       )}
       {basics.phone && (
         <div class="contact-item">
-          <Phone class="icon" size={16} />
-          <div>
-            <dt class="sr-only">{ui.phoneLabel}</dt>
-            <dd class="text-muted">{basics.phone}</dd>
-          </div>
+          <dt>
+            <Phone class="icon" size={16} />
+            <span class="sr-only">{ui.phoneLabel}</span>
+          </dt>
+          <dd class="text-muted">{basics.phone}</dd>
         </div>
       )}
     </dl>
-    <div class="ml-auto flex shrink-0 items-center gap-3 no-print">
-      <a
-        href={`mailto:${basics.email}`}
-        class="btn-icon-circle"
-        aria-label={ui.emailAria}
-      >
-        <Mail size={18} />
-      </a>
-      {github && (
-        <a
-          href={github.url}
-          class="btn-icon-circle"
-          aria-label={`${ui.githubAria}${github.username ? ` (@${github.username})` : ''}`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <GitHubFilled size={18} />
-        </a>
-      )}
-      {linkedin && (
-        <a
-          href={linkedin.url}
-          class="btn-icon-circle"
-          aria-label={`${ui.linkedinAria}${linkedin.username ? ` (@${linkedin.username})` : ''}`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <LinkedInFilled size={18} />
-        </a>
-      )}
-      {basics.url && (
-        <a
-          href={basics.url}
-          class="btn-icon-circle"
-          aria-label={ui.websiteAria}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Globe size={18} />
-        </a>
-      )}
-    </div>
-    <p class="print-contact hidden w-full text-xs leading-snug text-muted sm:col-span-2">
+    <p class="print-contact hidden w-full text-xs leading-snug text-muted">
       <a href={`mailto:${basics.email}`} class="text-link">{basics.email}</a>
       {github && (
         <>

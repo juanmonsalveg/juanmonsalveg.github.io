@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/generate-pdf.mjs",
+    "build": "astro build && node scripts/generate-pdf.mjs && node scripts/generate-og.mjs",
     "preview": "astro preview",
     "pdf": "node scripts/generate-pdf.mjs",
+    "og": "node scripts/generate-og.mjs",
     "astro": "astro"
   },
   "dependencies": {

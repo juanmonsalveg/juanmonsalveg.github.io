@@ -5,10 +5,10 @@
     "label": "Ingeniero Frontend Senior",
     "email": "juanmonsalveg@outlook.com",
     "url": "https://juanmonsalve.dev",
-    "summary": "Ingeniero Frontend Senior con más de 10 años entregando productos React para SaaS en la nube y ecommerce. Actualmente desarrollo funcionalidades en una plataforma VSaaS multi-región, impulsando modernización frontend y calidad E2E. Anteriormente lideré un equipo de 4 en configuradores 3D para una marca global. Sólido en arquitectura, manejo de estado y colaboración asíncrona con equipos frontend y backend distribuidos.",
+    "summary": "Ingeniero Frontend Senior con más de 10 años entregando productos React, hoy con TypeScript. Enfocado en arquitectura frontend, manejo de estado y calidad, desde pruebas unitarias y E2E con Playwright hasta observabilidad con Sentry, con experiencia full-stack en Node.js, GraphQL y SQL. Acostumbrado a liderar y colaborar de forma asíncrona con equipos frontend y backend distribuidos.",
     "keyHighlights": [
       "Más de 10 años entregando aplicaciones React en producción para SaaS en la nube y ecommerce",
-      "Lideré un equipo frontend de 4 personas en configuradores 3D para una marca deportiva global",
+      "Lideré un equipo frontend de 4 personas entregando experiencias de producto para ecommerce de una marca deportiva global",
       "Ingeniería en plataforma VSaaS con modernización, automatización E2E y entrega multi-región"
     ],
     "location": {
@@ -31,7 +31,7 @@
   "work": [
     {
       "name": "Milestone Systems / Arcules",
-      "position": "Frontend Software Engineer",
+      "position": "Ingeniero de Software Frontend",
       "startDate": "2023-12",
       "summary": "Plataforma cloud de Video Software as a Service (VSaaS) para gestión de cámaras de video y flujos operativos.",
       "highlights": [
@@ -65,18 +65,19 @@
       "summary": "Personalización de productos 3D para una marca deportiva global — experiencias en tienda y ecommerce.",
       "highlights": [
         "Lideré un equipo de 4 ingenieros frontend entregando múltiples configuradores 3D con renderizado en tiempo real para casos de uso en tienda y ecommerce",
-        "Lideré la modernización del stack de visualización de 2D a 3D usando WebGL y Three.js, habilitando previsualizaciones en tiempo real más ricas",
         "Me encargué del discovery con el cliente, alineación técnica y planificación de entrega para cumplir cronogramas de stakeholders",
         "Construí flujos de datos robustos integrando APIs GraphQL y agregando cobertura E2E con Playwright en journeys de personalización de alto tráfico",
-        "Mentoricé al equipo en rendimiento WebGL/Three.js, arquitectura de componentes y estrategia de pruebas"
+        "Mentoricé al equipo en arquitectura de componentes, estrategia de pruebas y rendimiento WebGL/Three.js",
+        "Lideré la modernización del stack de visualización de 2D a 3D usando WebGL y Three.js, habilitando previsualizaciones en tiempo real más ricas"
       ],
-      "technologies": ["TypeScript", "React", "Three.js", "WebGL", "Playwright"]
+      "technologies": ["TypeScript", "React", "Three.js", "WebGL", "Apollo GraphQL", "Playwright"]
     },
     {
       "name": "EPAM Anywhere",
       "position": "Desarrollador de Software Senior",
       "startDate": "2021-09",
       "endDate": "2022-01",
+      "compact": true,
       "summary": "Contrato corto entregando funcionalidades React para aplicaciones empresariales internas.",
       "highlights": [
         "Entregué funcionalidades React para aplicaciones de negocio internas usadas por equipos operativos distribuidos",
@@ -89,6 +90,7 @@
       "position": "Desarrollador Web Senior",
       "startDate": "2021-02",
       "endDate": "2021-09",
+      "compact": true,
       "summary": "Aplicaciones internas empresariales para un cliente de consultoría tecnológica global.",
       "highlights": [
         "Desarrollé funcionalidades en Vue.js para herramientas internas con patrones de UI basados en componentes",
@@ -103,11 +105,11 @@
       "endDate": "2021-02",
       "summary": "Personalización y customización de productos embebida en sitios ecommerce (configuradores 2D/3D).",
       "highlights": [
-        "Construí múltiples configuradores desde cero y di mantenimiento a un portafolio de experiencias de larga vida para marcas como Ray-Ban, Oakley, Louis Vuitton, Ralph Lauren, Moncler, Adidas, Fender, Puma y más",
         "Ascendí de nivel mid a senior; lideré la entrega de dos proyectos para clientes, definiendo dirección técnica, estimaciones y ejecución cross-team",
-        "Lideré la modernización del stack de visualización de 2D a 3D usando WebGL y Three.js en experiencias clave de configuración",
+        "Construí múltiples configuradores desde cero y di mantenimiento a un portafolio de experiencias de larga vida para marcas como Ray-Ban, Oakley, Louis Vuitton, Ralph Lauren, Moncler, Adidas, Fender, Puma y más",
         "Agregué cobertura E2E (Playwright/Cypress cuando aplicaba) para proteger flujos críticos de compra y personalización y reducir regresiones",
-        "Soporté servicios backend en Node.js e instrumenté analítica (Google Analytics) para mejorar visibilidad del funnel"
+        "Soporté servicios backend en Node.js e instrumenté analítica (Google Analytics) para mejorar visibilidad del funnel",
+        "Lideré la modernización del stack de visualización de 2D a 3D usando WebGL y Three.js en experiencias clave de configuración"
       ],
       "technologies": ["JavaScript", "React", "Three.js", "WebGL", "CSS", "Sass", "PostCSS", "Node.js", "Playwright", "Google Analytics"]
     },
@@ -116,6 +118,7 @@
       "position": "Desarrollador Web",
       "startDate": "2016-08",
       "endDate": "2018-02",
+      "compact": true,
       "summary": "Plataforma para gestionar fondos de marketing y campañas para marcas y redes de partners.",
       "highlights": [
         "Entregué funcionalidades full-stack para gestionar fondos de marketing, aprobaciones y flujos de campañas en una aplicación web legacy",
@@ -129,6 +132,7 @@
       "position": "Desarrollador Web",
       "startDate": "2014-02",
       "endDate": "2016-08",
+      "compact": true,
       "summary": "Suite de software empresarial para restaurantes, hoteles, clubes VIP, contabilidad y otras áreas.",
       "highlights": [
         "Evolucioné de practicante a ingeniero mid en 2 años, entregando funcionalidades en múltiples dominios de negocio",
@@ -158,7 +162,6 @@
         "Next.js",
         "Astro",
         "React Router",
-        "HTML",
         "CSS",
         "Tailwind CSS",
         "Styled Components",
@@ -169,21 +172,28 @@
       ]
     },
     {
-      "name": "Estado, Datos y APIs",
+      "name": "Estado y Validación",
       "keywords": [
         "Redux",
         "Redux Toolkit",
         "Zustand",
         "TanStack Query",
-        "GraphQL",
-        "APIs REST",
-        "OpenAPI/Swagger",
-        "Passport.js",
-        "OAuth 2.0 / OIDC",
-        "JWT",
-        "SQL",
         "Zod",
         "Yup"
+      ]
+    },
+    {
+      "name": "Backend y Datos",
+      "keywords": [
+        "Node.js",
+        "APIs REST",
+        "GraphQL",
+        "OpenAPI/Swagger",
+        "OAuth 2.0 / OIDC",
+        "JWT",
+        "Passport.js",
+        "SQL",
+        "PostgreSQL"
       ]
     },
     {
@@ -193,9 +203,7 @@
         "Cypress",
         "Jest",
         "Vitest",
-        "React Testing Library",
-        "ESLint",
-        "Prettier"
+        "React Testing Library"
       ]
     },
     {
@@ -218,8 +226,7 @@
         "GitLab CI",
         "Docker",
         "Feature Flags",
-        "Sentry",
-        "Git"
+        "Sentry"
       ]
     }
   ],
@@ -230,9 +237,15 @@
     },
     {
       "language": "Inglés",
-      "fluency": "Dominio profesional"
+      "fluency": "Avanzado (fluido)"
     }
   ],
+  "brands": ["Ray-Ban", "Oakley", "Louis Vuitton", "Ralph Lauren", "Moncler", "Adidas", "Fender", "Puma"],
+  "caseStudies": [],
+  "featuredProject": null,
+  "testimonials": [],
+  "howIWork": [],
+  "services": [],
   "meta": {
     "theme": "default",
     "lastUpdated": "2026-05-27"

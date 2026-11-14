@@ -10,30 +10,25 @@ const { locale } = Astro.props;
 const ui = getUi(locale);
 ---
 
-<nav
-  class="no-print flex items-center gap-0.5 rounded-lg border border-muted bg-surface p-0.5"
-  aria-label={ui.languageSwitcherAria}
->
+<nav class="no-print seg-group" aria-label={ui.languageSwitcherAria}>
   <a
     href="/en/"
-    class:list={[
-      'rounded-md px-2.5 py-1 text-xs font-medium transition',
-      locale === 'en' ? 'bg-accent-soft text-accent' : 'text-muted hover:text-accent',
-    ]}
+    class="seg-btn"
+    aria-current={locale === 'en' ? 'page' : undefined}
     hreflang="en"
     lang="en"
+    aria-label="English"
   >
-    EN
+    <span class="seg-chip">EN</span>
   </a>
   <a
     href="/es/"
-    class:list={[
-      'rounded-md px-2.5 py-1 text-xs font-medium transition',
-      locale === 'es' ? 'bg-accent-soft text-accent' : 'text-muted hover:text-accent',
-    ]}
+    class="seg-btn"
+    aria-current={locale === 'es' ? 'page' : undefined}
     hreflang="es"
     lang="es"
+    aria-label="Español"
   >
-    ES
+    <span class="seg-chip">ES</span>
   </a>
 </nav>

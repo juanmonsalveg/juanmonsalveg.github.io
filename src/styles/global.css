@@ -5,9 +5,12 @@
   --color-surface: #fff9f2;
   --color-text: #2c1810;
   --color-muted: #6b4e3a;
-  --color-accent: #e07b2e;
-  --color-accent-hover: #b85a18;
-  --color-link: #e07b2e;
+  /* Darkened for light theme so accent text reaches ≥ 4.5:1 on bg, surface and accent-soft. */
+  --color-accent: #a8521a;
+  --color-accent-hover: #8a4215;
+  --color-link: #a8521a;
+  /* Bright brand orange for decorative, non-text marks only. */
+  --color-accent-decor: #e07b2e;
   --color-border: #f0e0cc;
   --color-selection-bg: #f4b84a;
   --color-selection-text: #2c1810;
@@ -23,6 +26,7 @@
   --color-accent: #f4a04a;
   --color-accent-hover: #f4b84a;
   --color-link: #f4a04a;
+  --color-accent-decor: #f4a04a;
   --color-border: #3d2817;
   --color-selection-bg: #4a3220;
   --color-selection-text: #f5e6d3;
@@ -32,6 +36,9 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Body copy (summaries, bullets): 15px. */
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.65;
 }
 
 @layer base {
@@ -51,9 +58,14 @@
   }
 
   a:focus-visible,
-  button:focus-visible {
+  button:focus-visible,
+  summary:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+
+  main:focus {
+    outline: none;
   }
 }
 
@@ -99,8 +111,15 @@
   }
 
   .section-heading {
-    @apply mb-8 text-xl font-semibold tracking-tight;
+    @apply mb-6 text-2xl font-bold tracking-tight sm:mb-8;
     color: var(--color-text);
+  }
+
+  @media (width >= 40rem) {
+    .section-heading {
+      font-size: 1.75rem;
+      line-height: 2.25rem;
+    }
   }
 
   .section-heading::after {
@@ -110,18 +129,36 @@
     height: 3px;
     margin-top: 0.5rem;
     border-radius: 2px;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-decor);
   }
 
   .card {
-    @apply rounded-xl border p-5;
+    @apply rounded-xl border p-4 sm:p-5;
     border-color: var(--color-border);
     background-color: var(--color-surface);
     box-shadow: var(--shadow-card);
   }
 
+  /* Phones: drop the card frame to save height; framed from 40rem up (and in print). */
+  @media (width < 40rem) {
+    .card-flat-mobile {
+      border-width: 0;
+      border-radius: 0;
+      padding: 0;
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  /* Two-column card grids: a lone last card spans the full row instead of sitting orphaned. */
+  @media (width >= 40rem) {
+    .grid-fill-last > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
   .skill-tag {
-    @apply rounded-full px-3 py-1 text-sm;
+    @apply rounded-full px-2.5 py-0.5 text-[0.8125rem] sm:px-3 sm:py-1 sm:text-sm;
     background-color: var(--color-accent-soft);
     color: var(--color-text);
   }
@@ -132,9 +169,25 @@
     color: var(--color-accent);
   }
 
+  /* Phones: experience stacks read as a plain inline list instead of pills. */
+  @media (width < 40rem) {
+    .tool-list {
+      gap: 0.125rem 0.75rem;
+    }
+
+    .tool-list .tool-tag {
+      padding: 0;
+      background-color: transparent;
+    }
+  }
+
   .btn-primary {
-    @apply inline-flex items-center rounded-lg px-4 py-2 text-sm font-semibold text-white transition;
+    @apply inline-flex min-h-11 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition;
     background-color: var(--color-accent);
+  }
+
+  .dark .btn-primary {
+    color: var(--color-bg);
   }
 
   .btn-primary:hover,
@@ -176,7 +229,7 @@
   }
 
   .btn-icon-circle {
-    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition;
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition;
     background-color: var(--color-accent);
     /* Light: white icon on orange. Dark: cream page bg on golden accent. */
     color: #fff;
@@ -189,5 +242,95 @@
   .btn-icon-circle:hover,
   .btn-icon-circle:active {
     background-color: var(--color-accent-hover);
+  }
+
+  /* Sticky-bar controls: 44×44 px hit areas with a smaller visual chip inside. */
+  .seg-group {
+    @apply flex items-center rounded-lg border;
+    border-color: var(--color-border);
+    background-color: var(--color-surface);
+  }
+
+  .seg-btn {
+    @apply inline-flex h-11 min-w-11 cursor-pointer items-center justify-center text-xs font-semibold transition;
+    color: var(--color-muted);
+  }
+
+  .seg-btn:hover,
+  .seg-btn:hover .icon {
+    color: var(--color-accent);
+  }
+
+  .seg-chip {
+    @apply inline-flex h-8 min-w-8 items-center justify-center gap-2 rounded-md px-2 transition;
+  }
+
+  .seg-btn[aria-pressed="true"] .seg-chip,
+  .seg-btn[aria-current="page"] .seg-chip {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  .nav-link {
+    @apply inline-flex h-11 shrink-0 items-center rounded-md px-2 text-sm font-medium whitespace-nowrap transition;
+    color: var(--color-muted);
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent);
+  }
+
+  .scroll-row {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .scroll-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skip-link {
+    @apply absolute top-2 left-4 z-[60] rounded-lg px-4 py-3 text-sm font-semibold;
+    background-color: var(--color-accent);
+    color: #fff;
+    transform: translateY(-200%);
+  }
+
+  .dark .skip-link {
+    color: var(--color-bg);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  /* <summary> toggle for compact experience entries. */
+  /* 44px hit area; negative margins keep its visual footprint close to one text line. */
+  .details-toggle {
+    @apply -my-1.5 inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold;
+    color: var(--color-link);
+  }
+
+  .details-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .details-toggle::before {
+    content: "";
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.15s ease;
+  }
+
+  details[open] > .details-toggle::before {
+    transform: rotate(45deg);
+  }
+
+  details[open] > .details-toggle .when-closed,
+  details:not([open]) > .details-toggle .when-open {
+    display: none;
   }
 }
